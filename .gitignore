@@ -1,0 +1,11 @@
+# Środowisko wirtualne (bardzo ważne)
+venv/
+ENV/
+.venv/
+
+# Pliki tekstowe
+.txt
+
+# Pliki wykonywalne
+.exe
+.py
