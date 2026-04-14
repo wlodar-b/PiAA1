@@ -87,7 +87,29 @@ void Tester::runAllTests() {
                     if (!isSorted(copyData, size)) allSorted = false;
                 }
 
-                
+                // Ostrzeżenie, jeśli któreś sortowanie nie posortowało poprawnie
+                if (!allSorted) {
+                    std::cerr << "BŁĄD: sortowania w scenariuszu: " << scenarioName << " i rozmiarze: " << size << "\n";
+                }
+
+                // Obliczanie średnich czasów
+                timeMerge /= trials;
+                timeQuick /= trials;
+                timeIntro /= trials;
+
+                // Zapis do CSV
+                file << size << ";" << scenarioName << ";Merge Sort;" << std::fixed << std::setprecision(4) << timeMerge << "\n";
+                file << size << ";" << scenarioName << ";Quick Sort;" << std::fixed << std::setprecision(4) << timeQuick << "\n";
+                file << size << ";" << scenarioName << ";Intro Sort;" << std::fixed << std::setprecision(4) << timeIntro << "\n";
+
+                std::cout << "  Zakonczono:  " << scenarioName << std::endl;
             }
+
+            delete[] originalData;
+            delete[] copyData;
         }
+
+        file.close();
+        std::cout << "--- ZAKOŃCZENIE EKSPEYMENTÓW ---\n";
+        std::cout << "Wyniki zapisane w pliku: wyniki.csv\n";
 }
