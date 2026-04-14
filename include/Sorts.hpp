@@ -40,6 +40,38 @@ void mergeSort(T* array, int size, bool ascending = true) {
     delete[] buffer;
 }
 
+// QUICKSORT (Złożoność: Średnia O(n log n))
+
+template <typename T>
+int partition(T* array, int left, int right, bool ascending) {
+    T pivot = array[left + (right - left) / 2];
+    int i = left, j = right;
+
+    while (i <= j) {
+        if (ascending) {
+            while (array[i] < pivot) i++;
+            while (array[j] > pivot) j--;
+        } else {
+            while (array[i] > pivot) i++;
+            while (array[j] < pivot) j--;
+        }
+        if (i <= j) {
+            std::swap(array[i], array[j]);
+            i++;
+            j--;
+        }
+    }
+}
+
+template <typename T>
+void quickSort(T* array, int left, int right, bool ascending = true) {
+    if (left < right) {
+        int pivotIndex = partition(array, left, right, ascending);
+        if (left < pivotIndex - 1) quickSort(array, left, pivotIndex - 1, ascending);
+        if (pivotIndex < right) quickSort(array, pivotIndex, right, ascending);
+    }
+}
+
 
 
 #endif // SORTS_HPP
