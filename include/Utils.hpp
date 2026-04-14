@@ -3,7 +3,7 @@
 
 template<typename T>
 bool isSorted(T* array, int size, bool ascending = true) {
-    for (int i = 0; ) < size - 1; i++) {
+    for (int i = 0; i < size - 1; i++) {
         if (ascending) {
             if (array[i] > array[i + 1]) {
                 return false;
