@@ -61,6 +61,7 @@ int partition(T* array, int left, int right, bool ascending) {
             j--;
         }
     }
+    return i;
 }
 
 template <typename T>
