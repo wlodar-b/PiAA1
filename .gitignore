@@ -7,5 +7,6 @@ ENV/
 .txt
 
 # Pliki wykonywalne
-.exe
-.py
+*.exe
+*.py
+*.csv
