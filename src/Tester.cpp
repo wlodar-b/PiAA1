@@ -62,8 +62,32 @@ void Tester::runAllTests() {
                         DataGenerator::fillPartiallySorted(originalData, size, percentage);
                     }
 
-                    
+                    // Merge Sort
+                    copyArray(originalData, copyData, size);
+                    auto start = std::chrono::high_resolution_clock::now();
+                    mergeSort(copyData, size);
+                    auto end = std::chrono::high_resolution_clock::now();
+                    timeMerge += std::chrono::duration<double, std::milli>(end - start).count();
+                    if (!isSorted(copyData, size)) allSorted = false;
+
+                    // Quick Sort
+                    copyArray(originalData, copyData, size);
+                    start = std::chrono::high_resolution_clock::now();
+                    quickSort(copyData, 0, size - 1);
+                    end = std::chrono::high_resolution_clock::now();
+                    timeQuick += std::chrono::duration<double, std::milli>(end - start).count();
+                    if (!isSorted(copyData, size)) allSorted = false;
+
+                    // Intro Sort
+                    copyArray(originalData, copyData, size);
+                    start = std::chrono::high_resolution_clock::now();
+                    introSort(copyData, size);
+                    end = std::chrono::high_resolution_clock::now();
+                    timeIntro += std::chrono::duration<double, std::milli>(end - start).count();
+                    if (!isSorted(copyData, size)) allSorted = false;
                 }
+
+                
             }
         }
 }
