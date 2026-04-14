@@ -72,6 +72,58 @@ void quickSort(T* array, int left, int right, bool ascending = true) {
     }
 }
 
+// INTROSORT (Hybryda Quick Sort i Heap Sort)
 
+// Pomocnicza funkcja dla Heap Sort
+template <typename T>
+void heapify(T* array, int n, int i, int offset, bool ascending) {
+    int largest = i;
+    int l = 2 * i + 1;
+    int r = 2 * i + 2;
+
+    if (ascending) {
+        if (l < n && array[offset + l] > array[offset + largest]) largest = l;
+        if (r < n && array[offset + r] > array[offset + largest]) largest = r;
+    } else {
+        if (l < n && array[offset + l] < array[offset + largest]) largest = l;
+        if (r < n && array[offset + r] < array[offset + largest]) largest = r;
+    }
+
+    if (largest != i) {
+        std::swap(array[offset + i], array[offset + largest]);
+        heapify(array, n, largest, offset, ascending);
+    }
+}
+
+template <typename T>
+void heapSort(T* array, int left, int right, bool ascending) {
+    int n = right - left + 1;
+    for (int i = n / 2 - 1; i >= 0; i--) heapify(array, n, i, left, ascending);
+    for (int i = n - 1; i > 0; i--) {
+        std::swap(array[left], array[left + i]);
+        heapify(array, i, 0, left, ascending);
+    }
+}
+
+template <typename T>
+void introSortRecursive(T* array, int left, int right, int depthLimit, bool ascending) {
+    int n = right - left + 1;
+    if (n <= 1) return;
+
+    if (depthLimit == 0) {
+        heapSort(array, left, right, ascending); // Przełącz na Heap Sort
+        return;
+    }
+
+    int pivotIndex = partition(array, left, right, ascending);
+    introSortRecursive(array, left, pivotIndex - 1, depthLimit - 1, ascending);
+    introSortRecursive(array, pivotIndex, right, depthLimit - 1, ascending);
+}
+
+template <typename T>
+void introSort(T* array, int size, bool ascending = true) {
+    int depthLimit = 2* std::log2(size); // Standardowy limit głębokości dla Introsort
+    introSortRecursive(array, 0, size - 1, depthLimit, ascending);
+}
 
 #endif // SORTS_HPP
